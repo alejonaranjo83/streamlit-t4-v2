@@ -295,11 +295,12 @@ def plot_student_performance(df, student_name):
 
 
 
-    plt.show()
+    # plt.show()
 
     # st.pyplot(fig, use_container_width = 0)
     st.pyplot(fig, use_container_width=True)
     
+    return fig
 
 
     
