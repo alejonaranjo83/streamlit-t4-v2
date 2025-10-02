@@ -10,7 +10,7 @@ import os
 
 # read the data from the corresponding file 
 
-df = pd.read_excel('df_total_e2.xlsx')
+df = pd.read_excel('df_total_e3.xlsx')
 
 # Convert values in the column 'Nivel' to numeric, coercing errors to NaN
 df['Nivel'] = pd.to_numeric(df['Nivel'], errors='coerce') 
@@ -294,9 +294,9 @@ def plot_student_performance(df, student_name):
 
 
     # Texts to reference the nivel of the bars
-    plt.text(np.pi/3.9, 2.5, 'NC', fontsize=7, color='#444444', ha='right', va='bottom')
-    plt.text(np.pi/3.9, 3.5, 'CP', fontsize=7, color='#444444', ha='right', va='bottom')
-    plt.text(np.pi/3.9, 4.4, 'C', fontsize=7, color='#444444', ha='right', va='bottom')
+    plt.text(np.pi/3.9, 2.5, '3', fontsize=7, color='#444444', ha='right', va='bottom')
+    plt.text(np.pi/3.9, 3.5, '4', fontsize=7, color='#444444', ha='right', va='bottom')
+    plt.text(np.pi/3.9, 4.4, '5', fontsize=7, color='#444444', ha='right', va='bottom')
 
 
 
@@ -532,7 +532,7 @@ with col[0]: # Contenido de la columna 1
 with col[1]:
     st.write('Selecciona la entrega que quieres ver en detalle')
     
-    entrega = 'E2'
+    entrega = 'E3'
 
     e1, e2, e3, e4, e5, ex, ey, ez = st.columns(8)
     
