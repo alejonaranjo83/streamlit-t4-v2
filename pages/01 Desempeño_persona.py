@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import os
 
+import io
+
 
 
 
@@ -558,7 +560,6 @@ col = st.columns((0.38, 0.62), gap='small')
 #     st.markdown(f"<div style='text-align: left;'><p>A: Argumentación + coherencia <br> R: Representación + comunicación <br> S: Habilidades transversales del ser <br> F: Función + técnica</p></div>", unsafe_allow_html=True)
 
 
-import io # Importa io
 
 with col[0]: # Contenido de la columna 1
     

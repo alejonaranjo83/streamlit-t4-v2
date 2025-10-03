@@ -8,6 +8,8 @@ import streamlit as st
 
 import os
 
+import io 
+
 
 
 
@@ -139,7 +141,7 @@ def plot_student_performance(df, student_name):
     fig = plt.figure(figsize=(Wi, He), dpi=150)
 
     
-    streamlit_name(df, student_name)
+    # streamlit_name(df, student_name)
 
 
     # Plot with student performance
@@ -298,7 +300,7 @@ def plot_student_performance(df, student_name):
     # plt.show()
 
     # st.pyplot(fig, use_container_width = 0)
-    st.pyplot(fig, use_container_width=True)
+    #st.pyplot(fig, use_container_width=True)
     
     return fig
 
@@ -335,55 +337,105 @@ students = df['codigo_iniciales'].unique().tolist()
 
 # The logic behind the following script which contains two loops, can be understood with an example using only numbers at the end of this code
 
+# with st.container(height=900):
+#     for i in range(5): # The graphs will be placed in 5 rows
+#         for j in range(1): # Iterate over the columns just one time   
+#             cols = st.columns(9, gap='small')
+
+
+#             with cols[j]:
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9]) 
+#                     plot_student_performance(df, students[i*9])
+
+#             with cols[j+1]: # The position of each column will increase by 1
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9+1])
+#                     plot_student_performance(df, students[i*9+1])
+
+#             with cols[j+2]:
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9+2])
+#                     plot_student_performance(df, students[i*9+2])
+#             with cols[j+3]:
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9+3])
+#                     plot_student_performance(df, students[i*9+3])
+
+#             with cols[j+4]:
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9+4])
+#                     plot_student_performance(df, students[i*9+4])
+
+#             with cols[j+5]:
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9+5])
+#                     plot_student_performance(df, students[i*9+5])
+
+#             with cols[j+6]:
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9+6])
+#                     plot_student_performance(df, students[i*9+6])
+
+#             with cols[j+7]:
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9+7])
+#                     plot_student_performance(df, students[i*9+7])
+
+#             with cols[j+8]:
+#                 with st.container(height=150, border=0):
+#                     # streamlit_name(df, students[i*9+8])
+#                     plot_student_performance(df, students[i*9+8])
+
+
+
+
+def render_student_plot(df, student_name):
+    """Genera la figura, la guarda en buffer y la muestra como imagen."""
+    # Prevenir errores si el estudiante no existe (ej. si la lista es más corta que 9*5)
+    if student_name not in df['codigo_iniciales'].unique():
+        st.write("---") # Opcional: marcador visual para gráficos faltantes
+        return
+
+    # 1. Generar la figura de Matplotlib
+    fig_radar = plot_student_performance(df, student_name)
+    
+    # 2. Guardar la figura en un buffer de memoria como PNG
+    buf = io.BytesIO()
+    fig_radar.savefig(buf, format="png", bbox_inches='tight') 
+    
+    # 3. Mostrar el título/código del estudiante
+    streamlit_name(df, student_name) 
+    
+    # 4. Mostrar la imagen (respetando figsize=(Wi, He))
+    # use_column_width=True ayuda a que la imagen llene el ancho asignado por st.columns(9).
+    st.image(buf, use_container_width=True) 
+
+    # 5. Cerrar la figura para liberar memoria
+    plt.close(fig_radar)
+
+
+# --------------------------------------------------------------------------
+# Bucle principal de Streamlit
+# --------------------------------------------------------------------------
+
 with st.container(height=900):
-    for i in range(5): # The graphs will be placed in 5 rows
-        for j in range(1): # Iterate over the columns just one time   
-            cols = st.columns(9, gap='small')
+    for i in range(5): # Las filas (5)
+        
+        # Crear las 9 columnas para la fila actual
+        cols = st.columns(9, gap='small')
 
+        for k in range(9): # Las columnas (9)
+            student_index = i * 9 + k
+            
+            if student_index < len(students):
+                student_name = students[student_index]
+                
+                with cols[k]:
+                    with st.container(height=150, border=0):
+                        # Llamamos a la nueva función de renderizado para el estudiante actual
+                        render_student_plot(df, student_name)
 
-            with cols[j]:
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9]) 
-                    plot_student_performance(df, students[i*9])
-
-            with cols[j+1]: # The position of each column will increase by 1
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9+1])
-                    plot_student_performance(df, students[i*9+1])
-
-            with cols[j+2]:
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9+2])
-                    plot_student_performance(df, students[i*9+2])
-            with cols[j+3]:
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9+3])
-                    plot_student_performance(df, students[i*9+3])
-
-            with cols[j+4]:
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9+4])
-                    plot_student_performance(df, students[i*9+4])
-
-            with cols[j+5]:
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9+5])
-                    plot_student_performance(df, students[i*9+5])
-
-            with cols[j+6]:
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9+6])
-                    plot_student_performance(df, students[i*9+6])
-
-            with cols[j+7]:
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9+7])
-                    plot_student_performance(df, students[i*9+7])
-
-            with cols[j+8]:
-                with st.container(height=150, border=0):
-                    # streamlit_name(df, students[i*9+8])
-                    plot_student_performance(df, students[i*9+8])
 
 
 
