@@ -523,6 +523,8 @@ col = st.columns((0.38, 0.62), gap='small')
 
 
 
+# INTENTOS DE AJUSTE DEL TAMAÑO DEL GRÁFICO EN STREAMLIT
+
 
 # with col[0]: # Contenido de la columna 1
      
@@ -539,21 +541,39 @@ col = st.columns((0.38, 0.62), gap='small')
 
 
 
+# with col[0]: # Contenido de la columna 1
+    
+#     with st.container(height = 480, border=0):
+        
+#         # 1. Llama a la función y CAPTURA el objeto figura que retorna
+#         fig_radar = plot_student_performance(df, persona)
+        
+#         # 2. Renderiza la figura CAPTURADA. Esto respeta figsize=(Wi, He)
+#         #st.pyplot(fig_radar, use_container_width=True)
+#         st.pyplot(fig_radar)
+
+#         # 3. Cierra la figura de Matplotlib para liberar memoria
+#         plt.close(fig_radar) 
+        
+#     st.markdown(f"<div style='text-align: left;'><p>A: Argumentación + coherencia <br> R: Representación + comunicación <br> S: Habilidades transversales del ser <br> F: Función + técnica</p></div>", unsafe_allow_html=True)
+
+
+import io # Importa io
+
 with col[0]: # Contenido de la columna 1
     
-    with st.container(height = 480, border=0):
-        
-        # 1. Llama a la función y CAPTURA el objeto figura que retorna
-        fig_radar = plot_student_performance(df, persona)
-        
-        # 2. Renderiza la figura CAPTURADA. Esto respeta figsize=(Wi, He)
-        #st.pyplot(fig_radar, use_container_width=True)
-        st.pyplot(fig_radar)
+    # 1. Llama a la función y CAPTURA el objeto figura
+    fig_radar = plot_student_performance(df, persona)
+    
+    # 🛑 CAMBIO: Guarda la figura en un buffer de memoria (o archivo temporal)
+    buf = io.BytesIO()
+    fig_radar.savefig(buf, format="png", bbox_inches='tight') 
+    
+    # 2. Renderiza la imagen. Esto es más respetuoso con el tamaño original.
+    st.image(buf, use_container_width=True) # use_column_width aquí sí puede ser útil
 
-        # 3. Cierra la figura de Matplotlib para liberar memoria
-        plt.close(fig_radar) 
-        
-    st.markdown(f"<div style='text-align: left;'><p>A: Argumentación + coherencia <br> R: Representación + comunicación <br> S: Habilidades transversales del ser <br> F: Función + técnica</p></div>", unsafe_allow_html=True)
+    # 3. Cierra la figura de Matplotlib para liberar memoria
+    plt.close(fig_radar) 
 
 
 
