@@ -391,7 +391,6 @@ students = df['codigo_iniciales'].unique().tolist()
 
 
 def render_student_plot(df, student_name):
-    """Genera la figura, la guarda en buffer y la muestra como imagen."""
     # Prevenir errores si el estudiante no existe (ej. si la lista es más corta que 9*5)
     if student_name not in df['codigo_iniciales'].unique():
         st.write("---") # Opcional: marcador visual para gráficos faltantes
