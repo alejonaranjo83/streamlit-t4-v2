@@ -335,13 +335,15 @@ def plot_student_performance(df, student_name):
     # plt.show()
 
     # st.pyplot(fig, use_container_width = 0)
-    st.pyplot(fig, use_container_width=True)
+    # st.pyplot(fig, use_container_width=True)
     
     return fig
     
 
     # with st.container(height=400, border=0):
     #     st.pyplot(fig, use_container_width=True)
+# st.pyplot(fig, use_container_width=True)
+
 
 
 
@@ -517,18 +519,44 @@ streamlit_name(df, persona)
 col = st.columns((0.38, 0.62), gap='small')
 
 
-with col[0]: # Contenido de la columna 1
+
+
+
+
+
+# with col[0]: # Contenido de la columna 1
      
+#     with st.container(height = 480, border=0):
+        
+#         # CREANDO GRÁFICO INDIVIDUAL CON MATPLOTLIB
+#         # st.pyplot(fig, use_container_width=True)
+#         plot_student_performance(df, persona)
+#         # plot_student_performance(df, persona, entrega)
+
+
+#     st.markdown(f"<div style='text-align: left;'><p>A: Argumentación + coherencia <br> R: Representación + comunicación <br> S: Habilidades transversales del ser <br> F: Función + técnica</p></div>", unsafe_allow_html=True)
+    
+
+
+
+with col[0]: # Contenido de la columna 1
+    
     with st.container(height = 480, border=0):
         
-        # CREANDO GRÁFICO INDIVIDUAL CON MATPLOTLIB
-        # st.pyplot(fig, use_container_width=True)
-        plot_student_performance(df, persona)
-        # plot_student_performance(df, persona, entrega)
-
-
+        # 1. Llama a la función y CAPTURA el objeto figura que retorna
+        fig_radar = plot_student_performance(df, persona)
+        
+        # 2. Renderiza la figura CAPTURADA. Esto respeta figsize=(Wi, He)
+        st.pyplot(fig_radar, use_container_width=True)
+        
+        # 3. Cierra la figura de Matplotlib para liberar memoria
+        plt.close(fig_radar) 
+        
     st.markdown(f"<div style='text-align: left;'><p>A: Argumentación + coherencia <br> R: Representación + comunicación <br> S: Habilidades transversales del ser <br> F: Función + técnica</p></div>", unsafe_allow_html=True)
-    
+
+
+
+
 
 
 with col[1]:
