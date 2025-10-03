@@ -547,8 +547,9 @@ with col[0]: # Contenido de la columna 1
         fig_radar = plot_student_performance(df, persona)
         
         # 2. Renderiza la figura CAPTURADA. Esto respeta figsize=(Wi, He)
-        st.pyplot(fig_radar, use_container_width=True)
-        
+        #st.pyplot(fig_radar, use_container_width=True)
+        st.pyplot(fig_radar)
+
         # 3. Cierra la figura de Matplotlib para liberar memoria
         plt.close(fig_radar) 
         
