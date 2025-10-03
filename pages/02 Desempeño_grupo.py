@@ -13,7 +13,7 @@ import io
 
 
 
-st.subheader('Desempeño del grupo (2025.01)')
+st.subheader('Desempeño del grupo (2025.02)')
 
 st.write('El texto que encabeza cada gráfico, corresponde al código del estudiante, eliminando el encabezado de "30000" pues es igual para todos.')
 
